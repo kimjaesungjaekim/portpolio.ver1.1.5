@@ -82,7 +82,7 @@ $(function(){
     });
     return false;
   }).submit();
- 
+
 
   
 	$("#searchUI").on("click", "#searchBtn", function(event){

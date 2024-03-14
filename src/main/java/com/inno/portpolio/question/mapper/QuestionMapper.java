@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.inno.portpolio.paging.vo.PageVO;
+import com.inno.portpolio.paging.vo.Pagination;
 import com.inno.portpolio.paging.vo.PaginationInfo;
 import com.inno.portpolio.question.vo.QuestionVO;
 
@@ -41,6 +42,9 @@ public interface QuestionMapper {
 	 */
 	public int selectQuestionTotalRecord(PageVO pageVO);
 	
+	public int getCount();
+	
+	public List<QuestionVO> getListPage(Pagination pagination);
 	
 	/**
 	 * 다른 버전 - Qna 질문사항 리스트

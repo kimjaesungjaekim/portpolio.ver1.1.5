@@ -16,9 +16,22 @@
 	    </where>
 	</sql>
 	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*) AS listCnt
+		FROM QUESTION
+	</select>
+	
+	<select id="getListPage" parameterType="com.inno.portpolio.paging.vo.Pagination" resultType="com.inno.portpolio.question.vo.QuestionVO">
+	    SELECT * 
+	    FROM QUESTION 
+	    ORDER BY QESTN_DATE DESC 
+	    LIMIT #{rowCount}
+	    OFFSET #{offset}
+</select>
+	
 	
 	<!-- QnA 목록 페이징 레코드수 조회 -->
-	<select id="selectQuestionTotalRecord" parameterType="com.inno.portpolio.paging.vo.PageVO" resultType="integer">
+	<select id="selectQuestionTotalRecord" resultType="int">
 			SELECT COUNT(*)
 			FROM(
 				SELECT  QESTN_NO
@@ -39,7 +52,7 @@
 	
 	
 	<!-- QnA 목록 페이징 -->
-	<select id="selectQuestionList" parameterType="com.inno.portpolio.paging.vo.PageVO" resultType="com.inno.portpolio.question.vo.QuestionVO">
+	<select id="selectQuestionList" resultType="com.inno.portpolio.question.vo.QuestionVO">
 		SELECT   QESTN_NO
 			    ,USER_ID
 			    ,QESTN_CONTENT
