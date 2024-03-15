@@ -3,18 +3,25 @@ package com.inno.portpolio.question.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.inno.portpolio.common.enumpkg.ServiceResult;
+import com.inno.portpolio.common.file.mapper.AttachmentFileMapper;
+import com.inno.portpolio.common.file.service.AttachmentFileService;
+import com.inno.portpolio.common.file.vo.AttachmentFileVO;
 import com.inno.portpolio.paging.BootstrapPaginationRenderer;
+import com.inno.portpolio.paging.vo.PageVO;
 import com.inno.portpolio.paging.vo.Pagination;
 import com.inno.portpolio.paging.vo.PaginationInfo;
 import com.inno.portpolio.paging.vo.SearchVO;
@@ -48,13 +55,16 @@ public class QuestionController {
 	
 	private final QuestionMapper questionMapper;
 	
+	private final AttachmentFileService attachmentService;
+	
 	@GetMapping("/main")
 	public String maingPage(
 		final Model model
-		,@RequestParam(value = "page",defaultValue = "1") final int page	
+		,@RequestParam(value = "page",defaultValue = "1") final int page
+		,PageVO pageVO
 		) {
 		Pagination pagination = new Pagination(this.questionMapper.getCount(), page); // 모든 게시글 개수 구하기.
-
+		
 	    List<QuestionVO> qnalist = this.questionMapper.getListPage(pagination);
 
 	    model.addAttribute("qnalist", qnalist);
@@ -89,16 +99,6 @@ public class QuestionController {
 		return pagination;
 	}
 	
-	@GetMapping("/board")
-	public String selectListAndPage(
-			 
-		) {
-	    
-
-	    return "/question/question";
-	}
-	
-	
 	@GetMapping("/questionInsertForm")
 	public String questionInsertForm() {
 		return "/question/qnaForm";
@@ -108,6 +108,7 @@ public class QuestionController {
 	public String insertQusetion(
 			 @ModelAttribute QuestionVO question
 			,Authentication auth
+			,HttpServletResponse response
 		){
 		
 		String userId = auth.getName();
@@ -117,15 +118,19 @@ public class QuestionController {
 		
 		ServiceResult result;
 		String viewName =null;
-		
+		String script = "";
 		try {
 			result = questionService.createQuestion(question);
 			
 			if(result.equals(ServiceResult.OK)) {
+				script = "<script>alert('QnA 등록 성공 리스트로 돌아갑니다.');</script>";
 				viewName = "redirect:/question/main";
 			}else {
+				script = "<script>alert('QnA 등록 실패! 다시 작성해주세요.');</script>";
 				viewName = "redirect:/question/questionInsertForm";
 			}
+			response.getWriter().write(script);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -133,6 +138,28 @@ public class QuestionController {
 		return viewName;
 	}
 	
+	@GetMapping("/detail/{qestnNo}")
+	public String questionDetail(
+			@PathVariable("qestnNo") String qestnNo
+			,Model model
+		) {
+		
+		log.info("qestnNo 데이터 체크 : {}", qestnNo);
+		
+			QuestionVO questionOne = questionService.retrieveQuestionOne(qestnNo);
+			
+			String atchmnflNo = questionOne.getAtchmnflNo();
+			
+			List<AttachmentFileVO> attachmentFile = attachmentService.selectAttachmentFile(atchmnflNo);
+			
+			log.info("questionOne 데이터 체크 : {}", questionOne);
+			log.info("attachmentFile 데이터 체크 : {}", attachmentFile);
+			
+			model.addAttribute("questionOne",questionOne);
+			model.addAttribute("attachmentFile",attachmentFile);
+		
+		return "question/questionDetailMain";
+	}
 	
 	
 }

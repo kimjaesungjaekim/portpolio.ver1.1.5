@@ -11,5 +11,8 @@ public class LogoutSuccessHandler implements org.springframework.security.web.au
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         System.out.println("여기서 세션을 끊고 요즘엔 jwt 토큰 같은거 만료시키고 정리합니다.");
+        
+//        response.getWriter("<script>alert('로그아웃 하셨습니다. 로그인 페이지로 이동합니다.');</script>");
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 }

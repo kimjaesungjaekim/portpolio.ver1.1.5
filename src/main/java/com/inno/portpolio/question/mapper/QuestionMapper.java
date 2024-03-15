@@ -1,8 +1,8 @@
 package com.inno.portpolio.question.mapper;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 import com.inno.portpolio.paging.vo.PageVO;
 import com.inno.portpolio.paging.vo.Pagination;
@@ -59,6 +59,13 @@ public interface QuestionMapper {
 	 * @return
 	 */
 	public int selectDifferentQuestionTotalRecord(PaginationInfo<QuestionVO> paging);
+	
+	/**
+	 * QnA 상세보기 화면 정보
+	 * @param qestnNo
+	 * @return
+	 */
+	public QuestionVO selectQuestionOne(String qestnNo);
 	
 	/**
 	 * 질문사항 등록

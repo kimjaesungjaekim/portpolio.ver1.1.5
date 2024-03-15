@@ -1,6 +1,7 @@
 package com.inno.portpolio.common.file.service.Impl;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +49,12 @@ public class AttachmentFileServiceImpl implements AttachmentFileService {
 	public void deleteAttachmentFile(AttachmentFileVO attachmentFile) {
 		
 		attachmentFileMapper.deleteAttachmentFile(attachmentFile);
+	}
+	
+	@Override
+	public List<AttachmentFileVO> selectAttachmentFile(String atchmnflNo) {
+		
+		return attachmentFileMapper.selectAttachmentFile(atchmnflNo);
 	}
 
 }

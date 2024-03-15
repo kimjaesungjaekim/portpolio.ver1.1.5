@@ -13,6 +13,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <title>QnA 작성</title>
+    
+<style>
+.drop {
+  width: 58vw;
+  height: 40vh;
+   
+  margin: .6rem;
+  overflow: auto;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 5px;
+  border: 4px dashed #ddd;
+  user-select: none;
+  transition: 0.4s;
+ } 
+.dropBox.active {
+  background: #ddd;
+}
+
+.dropBox h1 {
+  font-size: 1.8rem;
+
+}
+</style>
 </head>
 <body>
 	<div>
@@ -47,10 +74,20 @@
 	            <label for="content">내용</label>
 	            <textarea class="form-control" id="qestnContent" name="qestnContent" rows="10" placeholder="내용을 입력하세요"></textarea>
 	        </div>
-	        <div class="form-group">
-	            <label for="title">파일선택</label>
-	            <input type="file" class="form-control" id="fileList" name="fileList" multiple="multiple">
-	        </div>	        
+<!-- 	        <div class="form-group"> -->
+<!-- 	            <label for="title">파일선택</label> -->
+<!-- 	            <input type="file" class="form-control" id="fileList" name="fileList" multiple="multiple"> -->
+<!-- 	        </div> -->
+	        
+		  	<div class="drop">
+			  <label class="label" id="label" for="input">
+			    <div class="inner" id="inner">드래그하거나 클릭해서 업로드</div>
+			    </label>
+			    <input id="input" class="input" accept="image/*" type="file" name="fileList" hidden="true" multiple="multiple">
+			    <p class="preview-title">preview</p>
+			    <div class="preview" id="preview"></div>
+			</div>
+
 	        <!-- 버튼들 -->
 	        <button type="submit" class="btn btn-primary">등록</button>
 	        <a href="/question/main" class="btn btn-secondary">목록</a>

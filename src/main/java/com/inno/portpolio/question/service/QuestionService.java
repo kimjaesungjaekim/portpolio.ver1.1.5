@@ -48,6 +48,13 @@ public interface QuestionService {
 	public PaginationInfo<QuestionVO> retrieveDifferentQuestionList(PaginationInfo<QuestionVO> paging);
 	
 	/**
+	 * QnA 상세보기 화면 정보
+	 * @param qestnNo
+	 * @return
+	 */
+	public QuestionVO retrieveQuestionOne(String qestnNo);
+	
+	/**
 	 * 질문사항 수정
 	 * @param question
 	 * @return

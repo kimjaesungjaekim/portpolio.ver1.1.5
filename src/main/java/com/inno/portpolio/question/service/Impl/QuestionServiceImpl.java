@@ -118,14 +118,15 @@ public class QuestionServiceImpl implements QuestionService {
 	    ServiceResult res = null;
 	    
 	    log.info(" 서비스 임플 파일 객체 정보 확인 : {}", question);
-	    
+	    String commonAtchmnflNo = null; 
+
 	    List<MultipartFile> multipartFile = question.getFileList();
 	    
 	    // 파일 유무 확인
 	    if (!multipartFile.isEmpty() && multipartFile !=null) {
 	        try {
 	        	
-	        	String commonAtchmnflNo = null; 
+	        	
 	        	
 	            for (int i = 0; i < multipartFile.size(); i++) {
 	                MultipartFile atch = multipartFile.get(i);
@@ -159,6 +160,7 @@ public class QuestionServiceImpl implements QuestionService {
 	            e.printStackTrace();
 	        }
 	    }
+	    question.setAtchmnflNo(commonAtchmnflNo);
 	    
 	    int cnt = questionMapper.insertQuestion(question);
 	    
@@ -170,7 +172,12 @@ public class QuestionServiceImpl implements QuestionService {
 	    
 	    return res;
 	}
-
+	
+	@Override
+	public QuestionVO retrieveQuestionOne(String qestnNo) {
+		QuestionVO questionOne = questionMapper.selectQuestionOne(qestnNo);
+		return questionOne;
+	}
 
 	@Override
 	public ServiceResult modifyQuestion(QuestionVO question) {
@@ -183,6 +190,8 @@ public class QuestionServiceImpl implements QuestionService {
 		ServiceResult res =null;
 		return res ;
 	}
+
+	
 
 
 

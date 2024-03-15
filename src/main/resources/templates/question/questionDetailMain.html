@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/layout}"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+    layout:fragment="content">
+
+<head>
+    <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+    <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>QnA</title>
+</head>
+<body>
+<div class="container mt-5">
+	<div class="card">
+	    <div class="card-header">
+	    	<h2>상세 정보</h2>
+	    	
+	    </div>
+	    <div th:if="${questionOne !=null}" class="card-body">
+	        <label>제목</label>
+	        <h4 class="card-title" th:text="${questionOne.qestnTitle}"></h4>
+	       <label>내용</label>
+	        <p class="card-subtitle mb-2 text-muted" th:text="${questionOne.qestnContent}"></p>
+	     	<label>작성일자</label>
+	        <p class="card-text" th:text="${questionOne.qestnDate}"></p>
+	        <p class="card-text" th:text="${questionOne.qestnAnswerDate}">답변날짜</p>
+	        파일 업로드한 목록
+	        <div th:if="${attachmentFile != null}">
+	            <h7>첨부 파일</h7>
+	            <ul th:each="file : ${attachmentFile}">
+	                <li th:text="${file.atchmnflNm}">파일명</li>
+	                <li th:text="${file.atchmnflIndictMg}">파일크기</li>
+	                <li th:text="${file.atchmnflMimeType}">파일타입</li>
+	            </ul>
+	        </div>
+	        <div th:unless="${attachmentFile != null}">
+	        	<h3>게시글에 첨부한 파일이 존재하지 않습니다.</h3>
+	        </div>
+	        <div sec:authorize="hasRole('ADMIN')">
+	        <button type="button" class="btn btn-primary">수정</button>
+	        <button type="button" class="btn btn-danger">삭제</button>
+	        </div>
+	        <button type="button" class="btn btn-secondary" onclick="location.href='/question/main'">목록</button>
+	        
+	    </div>
+	    <div th:unless="${questionOne !=null}" class="card-body">
+	    	<h1>상세정보를 조회 할 수 없습니다</h1>>
+	    </div>
+	</div>
+</div>
+</body>
+</html>

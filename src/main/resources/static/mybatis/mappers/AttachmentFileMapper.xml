@@ -60,4 +60,19 @@
 		WHERE ATCHMNFL_NO = #{atchmnflNo,jdbcType=VARCHAR}
 		  AND ATCHMNFL_SN = #{atchmnflSn,jdbcType=INTEGER}
 	</delete>
+	
+	<select id="selectAttachmentFile" parameterType="String" resultType="com.inno.portpolio.common.file.vo.AttachmentFileVO">
+		    SELECT   A.ATCHMNFL_NO,
+                     A.ATCHMNFL_SN,
+                     A.ATCHMNFL_NM,
+                     A.ATCHMNFL_STRE_NM,
+                     A.ATCHMNFL_STRE_PATH,
+                     A.ATCHMNFL_MG,
+                     A.ATCHMNFL_INDICT_MG,
+                     A.ATCHMNFL_MIME_TYPE
+                                                      
+			FROM     ATTACHMENT_FILE A 
+			
+			WHERE    A.ATCHMNFL_NO = #{atchmnflNo,jdbcType=VARCHAR}
+	</select>
 </mapper>

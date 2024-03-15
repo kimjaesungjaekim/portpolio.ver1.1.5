@@ -4,14 +4,14 @@
 	
 	<sql id="questionFrag">
 		<where>
-	    	<if test="condition == 'freeboard_title'">
-				WHERE freeboard_title LIKE CONCAT('%',#{keyword},'%')
+	    	<if test="condition == 'userId'">
+				WHERE USER_ID LIKE CONCAT('%',#{keyword},'%')
 			</if>
-			<if test="condition == 'freeboard_content'">
-				WHERE freeboard_content LIKE CONCAT('%',#{keyword},'%')
+			<if test="condition == 'qestnTitle'">
+				WHERE QESTN_TITLE LIKE CONCAT('%',#{keyword},'%')
 			</if>
 			<if test="condition == 'freeboard_writer'">
-				WHERE freeboard_writer LIKE CONCAT('%',#{keyword},'%')
+				WHERE QESTN_CONTENT LIKE CONCAT('%',#{keyword},'%')
 			</if>
 	    </where>
 	</sql>
@@ -171,4 +171,19 @@
 	</insert>
 	
 	
+	<select id="selectQuestionOne" parameterType="String" resultType="com.inno.portpolio.question.vo.QuestionVO">
+		SELECT  Q.QESTN_NO,
+	            Q.USER_ID,
+	            Q.QESTN_CONTENT,
+	            Q.QESTN_TITLE,
+	            Q.QESTN_PASSWORD,
+	            Q.QESTN_ANSWER,
+	            Q.QESTN_DATE,
+	            Q.QESTN_ANSWER_DATE,
+	            Q.ATCHMNFL_NO
+                                                       
+		FROM    QUESTION Q
+		
+		WHERE   QESTN_NO = #{qestnNo,jdbcType=VARCHAR}
+	</select>
 </mapper>

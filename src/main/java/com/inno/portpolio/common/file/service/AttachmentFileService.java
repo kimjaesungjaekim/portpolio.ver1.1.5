@@ -1,5 +1,7 @@
 package com.inno.portpolio.common.file.service;
 
+import java.util.List;
+
 import com.inno.portpolio.common.file.vo.AttachmentFileVO;
 /**
 * @author 연구개발 5팀 사원 김재성
@@ -15,6 +17,13 @@ import com.inno.portpolio.common.file.vo.AttachmentFileVO;
 * </pre>
 */
 public interface AttachmentFileService {
+	
+	/**
+	 * 파일 조회 해오기
+	 * @param atchmnflNo
+	 * @return
+	 */
+	public List<AttachmentFileVO> selectAttachmentFile(String atchmnflNo);
 	
 	public void firstCreateAttachmentFile(AttachmentFileVO attachmentFile);
 	
