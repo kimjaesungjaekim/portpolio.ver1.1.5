@@ -3,6 +3,7 @@ package com.inno.portpolio.common.file.service.Impl;
 import java.io.File;
 import java.util.List;
 
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,16 +33,29 @@ public class AttachmentFileServiceImpl implements AttachmentFileService {
 	@Autowired
 	private AttachmentFileMapper attachmentFileMapper;
 	
+	@Value("${file.upload.dir}")
+	private String saveFolderPath;
+	
+	private File saveFolder;
+	
 	@Override
-	public void firstCreateAttachmentFile(AttachmentFileVO attachmentFile) {
+	public void firstCreateAttachmentFile(AttachmentFileVO attachmentFile) throws Exception {
 		
-		attachmentFileMapper.firstInsertAttachmentFile(attachmentFile);
+		if(attachmentFile !=null && ! attachmentFile.getAtchmnflNm().equals("")) {
+			attachmentFileMapper.firstInsertAttachmentFile(attachmentFile);
+		}else {
+			throw new Exception();
+		}
 		
 	}
 	@Override
-	public void afterCreateAttachmentFile(AttachmentFileVO attachmentFile) {
+	public void afterCreateAttachmentFile(AttachmentFileVO attachmentFile) throws Exception {
 		
-		attachmentFileMapper.afterInsertAttachmentFile(attachmentFile);
+		if(attachmentFile !=null && ! attachmentFile.getAtchmnflNm().equals("")) {
+			attachmentFileMapper.afterInsertAttachmentFile(attachmentFile);
+		}else {
+			throw new Exception();
+		}
 		
 	}
 
@@ -49,12 +63,34 @@ public class AttachmentFileServiceImpl implements AttachmentFileService {
 	public void deleteAttachmentFile(AttachmentFileVO attachmentFile) {
 		
 		attachmentFileMapper.deleteAttachmentFile(attachmentFile);
+		
+		
 	}
 	
 	@Override
 	public List<AttachmentFileVO> selectAttachmentFile(String atchmnflNo) {
 		
 		return attachmentFileMapper.selectAttachmentFile(atchmnflNo);
+	}
+	
+	
+	@Override
+	public AttachmentFileVO retrieveAttachmentFileOne(AttachmentFileVO attachmentFile) throws NotFoundException {
+		
+			AttachmentFileVO attachmenfFileVO = attachmentFileMapper.selectAttachmentFileOne(attachmentFile);
+			
+			if (attachmenfFileVO != null) {
+		        try {
+		            File fileToSave = new File(saveFolder, attachmenfFileVO.getAtchmnflNm());
+		            attachmenfFileVO.saveTo(fileToSave);
+		        } catch (Exception e) {
+		            throw new RuntimeException(e);
+		        }
+		    } else {
+		        throw new NotFoundException(String.format("%d 해당하는 시험출제 자료가 없음", attachmenfFileVO.getAtchmnflNm()));
+		    }
+		    
+		    return attachmenfFileVO;
 	}
 
 }

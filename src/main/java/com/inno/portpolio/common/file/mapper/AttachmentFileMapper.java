@@ -22,11 +22,18 @@ import com.inno.portpolio.common.file.vo.AttachmentFileVO;
 public interface AttachmentFileMapper {
 	
 	/**
-	 * 파일 조회 해오기
+	 * 파일등록 리스트 조회 해오기
 	 * @param atchmnflNo
 	 * @return
 	 */
 	public List<AttachmentFileVO> selectAttachmentFile(String atchmnflNo);
+	
+	/**
+	 * 개별 파일 다운로드 
+	 * @param attachmentFile
+	 * @return
+	 */
+	public AttachmentFileVO selectAttachmentFileOne(AttachmentFileVO attachmentFile);
 	
 	/**
 	 * 첫 파일 등록

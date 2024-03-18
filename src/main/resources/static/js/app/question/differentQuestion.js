@@ -28,11 +28,13 @@ $(function(){
 	});
 	
 	$(document).on("click","#qnaListBody tr", function(){
-		
+			
+			let auth = $("#entryQuestionDiv").data("authorities");
 			let qestnNo = $(this).data("qestn-no");
 			let qestnPassword = $(this).data("qestn-password");
 			
-			if(qestnPassword != null){
+			
+			if(qestnPassword != null && auth == "[ROLE_USER]"){
 				let password = prompt("비밀번호를 입력하세요:", "");
 				
 		        if (password == qestnPassword) {
@@ -48,12 +50,6 @@ $(function(){
 	
 });
 
-function showDetail(qestnNo) {
-		
-       
-}	
-
-	
 
 /*	// 상세보기
 	$(document).ready(function(){

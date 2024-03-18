@@ -186,4 +186,13 @@
 		
 		WHERE   QESTN_NO = #{qestnNo,jdbcType=VARCHAR}
 	</select>
+	
+	<update id="updateQuestionAnswer" parameterType="com.inno.portpolio.question.vo.QuestionVO">
+		UPDATE QUESTION
+		
+		SET  QESTN_ANSWER_DATE = NOW()
+		    ,QESTN_ANSWER = #{qestnAnswer,jdbcType=VARCHAR}
+		    
+		WHERE QESTN_NO = #{qestnNo,jdbcType=VARCHAR}    
+	</update>
 </mapper>

@@ -55,10 +55,12 @@
 	</insert>
 	
 	<delete id="deleteAttachmentFile" parameterType="com.inno.portpolio.common.file.vo.AttachmentFileVO">
+		
 		DELETE ATTACHMENT_FILE
 		
 		WHERE ATCHMNFL_NO = #{atchmnflNo,jdbcType=VARCHAR}
-		  AND ATCHMNFL_SN = #{atchmnflSn,jdbcType=INTEGER}
+		
+		  AND ATCHMNFL_SN = #{atchmnflSn,jdbcType=BIGINT}
 	</delete>
 	
 	<select id="selectAttachmentFile" parameterType="String" resultType="com.inno.portpolio.common.file.vo.AttachmentFileVO">
@@ -74,5 +76,22 @@
 			FROM     ATTACHMENT_FILE A 
 			
 			WHERE    A.ATCHMNFL_NO = #{atchmnflNo,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 파일 다운로드 -->
+	<select id="selectAttachmentFileOne" parameterType="com.inno.portpolio.common.file.vo.AttachmentFileVO" resultType="com.inno.portpolio.common.file.vo.AttachmentFileVO">
+			SELECT   A.ATCHMNFL_NO,
+                     A.ATCHMNFL_SN,
+                     A.ATCHMNFL_NM,
+                     A.ATCHMNFL_STRE_NM,
+                     A.ATCHMNFL_STRE_PATH,
+                     A.ATCHMNFL_MG,
+                     A.ATCHMNFL_INDICT_MG,
+                     A.ATCHMNFL_MIME_TYPE
+                                                      
+			FROM     ATTACHMENT_FILE A 
+			
+			WHERE    A.ATCHMNFL_NO = #{atchmnflNo,jdbcType=VARCHAR}
+			  AND    A.ATCHMNFL_SN = #{atchmnflSn,jdbcType=INTEGER}
 	</select>
 </mapper>

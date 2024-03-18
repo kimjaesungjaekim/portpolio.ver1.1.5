@@ -87,5 +87,12 @@ public interface QuestionMapper {
 	 * @return
 	 */
 	public int deleteQuestion(QuestionVO question);
+
+	/**
+	 * 등록된 질문사항 글 답변글 Update
+	 * @param qestnAnswer
+	 * @return
+	 */
+	public int updateQuestionAnswer(QuestionVO question);
 	
 }

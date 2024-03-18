@@ -75,4 +75,12 @@ public interface QuestionService {
 	 */
 	ServiceResult createQuestion(QuestionVO question) throws IOException;
 	
+	
+	/**
+	 * 등록된 질문사항 글에 관리자가 답변 글 작성하는 update
+	 * @param qestnAnswer
+	 * @return
+	 */
+	public ServiceResult modifyQuestionAnswer(QuestionVO question);
+	
 }

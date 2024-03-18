@@ -1,6 +1,9 @@
 package com.inno.portpolio.common.file.service;
 
+import java.io.FileNotFoundException;
 import java.util.List;
+
+import org.apache.ibatis.javassist.NotFoundException;
 
 import com.inno.portpolio.common.file.vo.AttachmentFileVO;
 /**
@@ -25,9 +28,17 @@ public interface AttachmentFileService {
 	 */
 	public List<AttachmentFileVO> selectAttachmentFile(String atchmnflNo);
 	
-	public void firstCreateAttachmentFile(AttachmentFileVO attachmentFile);
+	/**
+	 * 개별 파일 다운로드 
+	 * @param attachmentFile
+	 * @return
+	 * @throws NotFoundException 
+	 */
+	public AttachmentFileVO retrieveAttachmentFileOne(AttachmentFileVO attachmentFile) throws NotFoundException;
 	
-	public void afterCreateAttachmentFile(AttachmentFileVO attachmentFile);
+	public void firstCreateAttachmentFile(AttachmentFileVO attachmentFile) throws Exception;
+	
+	public void afterCreateAttachmentFile(AttachmentFileVO attachmentFile) throws Exception;
 	
 	public void deleteAttachmentFile(AttachmentFileVO attachmentFile);
 }

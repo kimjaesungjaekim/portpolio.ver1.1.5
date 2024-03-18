@@ -123,10 +123,8 @@ public class QuestionServiceImpl implements QuestionService {
 	    List<MultipartFile> multipartFile = question.getFileList();
 	    
 	    // 파일 유무 확인
-	    if (!multipartFile.isEmpty() && multipartFile !=null) {
+	    if (!multipartFile.isEmpty() && multipartFile !=null && multipartFile.size() >= 1 ) {
 	        try {
-	        	
-	        	
 	        	
 	            for (int i = 0; i < multipartFile.size(); i++) {
 	                MultipartFile atch = multipartFile.get(i);
@@ -189,6 +187,20 @@ public class QuestionServiceImpl implements QuestionService {
 	public ServiceResult removeQuestion(QuestionVO question) {
 		ServiceResult res =null;
 		return res ;
+	}
+
+	@Override
+	public ServiceResult modifyQuestionAnswer(QuestionVO question) {
+		ServiceResult res;
+		
+		int cnt = questionMapper.updateQuestionAnswer(question);
+		
+		if(cnt >0) {
+			res = ServiceResult.OK;
+		}else {
+			res = ServiceResult.FAIL;
+		}
+		return res;
 	}
 
 	

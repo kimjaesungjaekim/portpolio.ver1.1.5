@@ -69,7 +69,7 @@
 	        <div class="table-responsive">
 	            <div class="container mt-5">
 			        <div>
-					    <div>
+					    <div id="entryQuestionDiv" th:data-authorities="${#authentication.principal.authorities}">
 					        <h1 style="margin-bottom: 50px; margin-top: 50px; text-align: center">QnA 목록</h1>
 					
 					        <div class="btn-wrapper" style="margin-bottom: 10px;">
@@ -92,8 +92,27 @@
 												<th>작성일시</th>
 											</tr>
 										</thead>
-											<th:block th:if="${qnalist != null}">                         
-											    <tbody id="qnaListBody">
+											<th:block sec:authorize="hasRole('ADMIN')">
+												<tbody th:if="${qnalist != null}" id="qnaListBody">
+											        <tr th:each="list : ${qnalist}" th:data-qestn-no="${list.qestnNo}" th:data-qestn-password="${list.qestnPassword}">
+											            <td>
+											                <span th:text="${list.qestnTitle}"></span>
+											            </td>
+											            <td>
+											                <span th:text="${list.qestnContent}"></span>
+											            </td>
+											            <td><span th:text="${list.userId}"></span></td>
+											            <td><span th:text="${list.qestnDate}"></span></td>
+											        </tr>
+											    </tbody>
+											    <tbody th:unless="${qnalist != null}">
+											        <tr>
+											            <td colspan="4"><h1>조회하신 QnA 목록이 없습니다.</h1></td>
+											        </tr> 
+											    </tbody>
+											</th:block>
+											<th:block sec:authorize="hasRole('USER')">
+											    <tbody th:if="${qnalist != null}" id="qnaListBody">
 											        <tr th:each="list : ${qnalist}" th:data-qestn-no="${list.qestnNo}" th:data-qestn-password="${list.qestnPassword}">
 											            <td>
 											                <span th:if="${list.qestnPassword != null and list.qestnPassword != ''}">비밀글 </span>
@@ -101,7 +120,7 @@
 											                		 #strings.isEmpty(list.qestnPassword)}" th:text="${list.qestnTitle}"></span>
 											            </td>
 											            <td>
-											                <span th:if="${list.qestnPassword != null and list.qestnPassword != ''}" >비밀내용</span>
+											                <span th:if="${list.qestnPassword != null and list.qestnPassword != '' }" >비밀내용</span>
 											                <span th:if="${list.qestnPassword == null or list.qestnPassword == '' or 
 											                			#strings.isEmpty(list.qestnPassword)}" th:text="${list.qestnContent}"></span>
 											            </td>
@@ -109,9 +128,7 @@
 											            <td><span th:text="${list.qestnDate}"></span></td>
 											        </tr>
 											    </tbody>
-											</th:block>
-											<th:block th:unless="${qnalist != null}">
-											    <tbody>
+											    <tbody th:unless="${qnalist != null}">
 											        <tr>
 											            <td colspan="4"><h1>조회하신 QnA 목록이 없습니다.</h1></td>
 											        </tr> 
