@@ -1,0 +1,9 @@
+diff a/src/main/java/com/inno/portpolio/common/file/controller/AttachmentFileController.java b/src/main/java/com/inno/portpolio/common/file/controller/AttachmentFileController.java	(rejected hunks)
+@@ -95,6 +95,7 @@
+ 			
+ 			attachmentFile.setAtchmnflNo(atchmnflNo);
+ 			attachmentFile.setAtchmnflSn(atchmnflSn);
++			attachmentFile.setAtchmnflStreNm(atchmnflStreNm);
+ 			
+ 			attachmentService.deleteAttachmentFile(attachmentFile);
+ 			

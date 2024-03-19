@@ -58,9 +58,13 @@
 		
 		DELETE ATTACHMENT_FILE
 		
+<<<<<<< HEAD
 		WHERE ATCHMNFL_NO = #{atchmnflNo,jdbcType=VARCHAR}
 		AND ATCHMNFL_SN = #{atchmnflSn,jdbcType=INTEGER}
 		AND ATCHNNFL_STRE_NM = #{atchmnflStreNm,jdbcType=VARCHAR}
+=======
+		WHERE ATCHMNFL_NO = #{atchmnflNo,jdbcType=VARCHAR} AND ATCHMNFL_SN = #{atchmnflSn,jdbcType=INTEGER}
+>>>>>>> 8edb38e873f70bbfc0ad6d7da2c166a7c9267532
 	</delete>
 	
 	<select id="selectAttachmentFile" parameterType="String" resultType="com.inno.portpolio.common.file.vo.AttachmentFileVO">

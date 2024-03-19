@@ -3,7 +3,6 @@ package com.inno.portpolio.common.file.controller;
 import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.inno.portpolio.common.file.service.AttachmentFileService;
@@ -49,7 +50,7 @@ public class AttachmentFileController {
 			
 			attachmentFileVO.setAtchmnflNo(atchmnflNo);
 			attachmentFileVO.setAtchmnflSn(atchmnflSn);
-			
+            
 			AttachmentFileVO fileDownload =  attachmentService.retrieveAttachmentFileOne(attachmentFileVO);
 			
 			if(fileDownload == null) {
@@ -79,27 +80,28 @@ public class AttachmentFileController {
 		return ResponseEntity.ok().headers(headers).body(fileResource);
 	}
 	
-	@GetMapping("/delete/{atchmnflNo}/{atchmnflSn}/{atchmnflStreNm}")
+	@PostMapping(value="/delete")
 	@Transactional
 	public String removeAttachmentFile(
-			@PathVariable("atchmnflNo") String atchmnflNo
-			,@PathVariable("atchmnflSn") int atchmnflSn
-			,@PathVariable("atchmnflStreNm") String atchmnflStreNm
+			 @RequestParam("atchmnflNo") String atchmnflNo
+			,@RequestParam("atchmnflSn") int atchmnflSn
+			,@RequestParam("atchmnflStreNm") String atchmnflStreNm
 		){
 		
 //		HashMap<String, Object> map = new HashMap<>();
+		
 		try {
 			
-			AttachmentFileVO attachmentFile = new AttachmentFileVO();
 			String deleteFileName = "";
 			
+			AttachmentFileVO attachmentFile = new AttachmentFileVO();
 			attachmentFile.setAtchmnflNo(atchmnflNo);
 			attachmentFile.setAtchmnflSn(atchmnflSn);
-			attachmentFile.setAtchmnflStreNm(atchmnflStreNm);
-			
+			attachmentFile.setAtchmnflStreNm(atchmnflStreNm); 
+
 			attachmentService.deleteAttachmentFile(attachmentFile);
 			
-			deleteFileName = URLDecoder.decode(atchmnflStreNm,"UTF-8");
+			deleteFileName = URLDecoder.decode(attachmentFile.getAtchmnflStreNm(),"UTF-8");
 			
 			File file = new File(saveFolderPath + File.separator + deleteFileName );
 			boolean result = file.delete();
@@ -112,7 +114,7 @@ public class AttachmentFileController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:question/questionModifyForm/" + atchmnflNo ;
+		return "redirect:question/questionModifyForm/" + atchmnflNo;
 	}
 	
 	
