@@ -95,6 +95,7 @@ public class AttachmentFileController {
 			
 			attachmentFile.setAtchmnflNo(atchmnflNo);
 			attachmentFile.setAtchmnflSn(atchmnflSn);
+			attachmentFile.setAtchmnflStreNm(atchmnflStreNm);
 			
 			attachmentService.deleteAttachmentFile(attachmentFile);
 			

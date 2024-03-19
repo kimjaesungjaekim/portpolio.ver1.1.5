@@ -87,7 +87,7 @@ public class AttachmentFileServiceImpl implements AttachmentFileService {
 		            throw new RuntimeException(e);
 		        }
 		    } else {
-		        throw new NotFoundException(String.format("%d 해당하는 시험출제 자료가 없음", attachmenfFileVO.getAtchmnflNm()));
+		        throw new NotFoundException(String.format("%d 해당하는 파일자료가 없음", attachmenfFileVO.getAtchmnflNm()));
 		    }
 		    
 		    return attachmenfFileVO;
